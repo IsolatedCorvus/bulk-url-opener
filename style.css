@@ -7,16 +7,29 @@
 #main-body {
     text-align: center;
     width: 100%;
+    height: 100dvh;
     border: 2px solid red;
-
     background-color: #1b55ad;
+
+    /* display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-between; */
 }
 
 h1, h2, label { color: white; }
+button {
+    outline: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+
 
 /* input body */
 #body {
     display: flex;
+    position: relative;
 
     /* centering */
     margin-left: auto;
@@ -34,20 +47,32 @@ h1, h2, label { color: white; }
         outline: transparent;
         border: none;
 
+        border-radius: 0.5rem 0.5rem 0 0;
         /* restricts resize vertically */
         resize: vertical;
     }
     #btn-submit {
         width: 100%;
         padding: 1rem 1.5rem;
-
-        outline: transparent;
-        border: none;
-        cursor: pointer;
+        border-radius: 0 0 0.5rem 0.5rem;
     }
     #btn-submit:disabled{
         cursor: not-allowed;
     }
+}
+
+.warning-pop-up{
+    background-color: red;
+    position: absolute;
+    bottom: 50%;
+    width: 100%;
+}
+.hide{
+    display: none;
+}
+
+.btn-options{
+    padding: 0.5rem 1rem;
 }
 
 /* url links */
