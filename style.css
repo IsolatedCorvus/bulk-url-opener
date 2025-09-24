@@ -2,40 +2,40 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+body{
+    background-color: #1b55ad;
+    /* centering */
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
 #main-body {
     text-align: center;
-    width: 100%;
     height: 100dvh;
-    border: 2px solid red;
     background-color: #1b55ad;
 
     /* display: flex;
     flex-flow: column nowrap;
-    align-items: center;
-    justify-content: space-between; */
+    align-content: center;
+    justify-content: space-around; */
 }
 
 h1, h2, label { color: white; }
 button {
+    font-weight: 600;
     outline: transparent;
     border: none;
     cursor: pointer;
 }
-
-
 
 /* input body */
 #body {
     display: flex;
     position: relative;
 
-    /* centering */
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    
     margin-bottom: 2%;
 
     flex-flow: column nowrap;
@@ -55,9 +55,14 @@ button {
         width: 100%;
         padding: 1rem 1.5rem;
         border-radius: 0 0 0.5rem 0.5rem;
+        background-color: #18BC9C;
+    }
+    #btn-submit:hover{
+        background-color: #28dbb7;
     }
     #btn-submit:disabled{
-        cursor: not-allowed;
+        cursor: default;
+        background-color: #9b9b9c;
     }
 }
 
@@ -71,9 +76,31 @@ button {
     display: none;
 }
 
-.btn-options{
-    padding: 0.5rem 1rem;
+
+.btn-container{
+    :first-child{
+        width: 50%;
+        background-color: #ffc107;
+    }
+    :first-child:hover{
+        background-color: #ffd350;
+    }
+    :nth-child(2){
+        float: right;
+        width: 50%;
+        background-color: #dc3545;
+    }
+    :nth-child(2):hover{
+        background-color: #ec5a68;
+    }
+    :nth-child(3){
+        margin-top: 2%;
+    }
 }
+.btn-options{
+    padding: 0.8rem 1rem;
+}
+
 
 /* url links */
 #link-list{
@@ -82,11 +109,20 @@ button {
     align-items: center;
     justify-content: center;
 
+    background-color: #073272;
+
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #464b53 #bebebe60;
+
     .link-list-item{
-        margin: 0.25rem 0;
+        border-bottom: 1px solid black;
         width: 50%;
         padding: 0.5rem 1rem;
         background-color: white;
         cursor: pointer;
+    }
+    .link-list-item:hover{
+        background-color: #d3d3d3;
     }
 }

@@ -1,6 +1,8 @@
+//! client must allow pop-ups and re-directs for multiple links to open
+
 const textArea = document.getElementById("url-input");
 const linkList = document.getElementById("link-list");
-const httpRegEX = /https?:\/\/.*/ig;
+const urlRegEx = /https?:\/\/[^\s]*/ig;
 
 const btnOptions = document.querySelector(".btn-container");
 
@@ -13,13 +15,22 @@ document.getElementById("clear-all").addEventListener("click", clear);
 
 
 // TODO: button only active when VALID link is available.
-// btn.setAttribute("disabled", true);
+// Buttons inactive while text-area is empty
+/*
+btn.setAttribute("disabled", true);
 
-//TODO: use RegEx to validate urls
+textArea.addEventListener("input", () => {
+    if(textArea.value.length){
+        console.log("HERE");
+        btn.removeAttribute("disabled");
+    }
+});
+*/
+
 
 let importedLinks = [];
 
-function handleUserInput(e) {
+function handleUserInput() {
     if (!textArea.value) {
         // display popup then hide
         const popUpWarning = document.querySelector(".warning-pop-up");
@@ -28,16 +39,24 @@ function handleUserInput(e) {
     }
     // window.open(textArea.value);
 
+    let userInput = textArea.value;
+
     // clear previous input
     importedLinks = [];
-    linkList.innerHTML = "<h2>URLs:</h2>";
+    linkList.innerHTML = "";
     btnOptions.classList.remove("hide");
+    btn.setAttribute("disabled", false);
 
+    // for concatenated links with no clear delimitors
+    //* .matchAll() returns an iterator, spread operator to place into array []
+    const httpRegEx = /https?/ig;
+    if([...userInput.matchAll(httpRegEx)].length > 1) {
+        userInput = linkSeperator(userInput);
+    }
 
-    //TODO: fix concatenated line of urls, try to seperate
     // .exec() returns null if match fails, else returns array of matches
     let arrMatch;
-    while ((arrMatch = httpRegEX.exec(textArea.value)) !== null) {
+    while ((arrMatch = urlRegEx.exec(userInput)) !== null) {
         // console.log(arrMatch[0]);
 
         importedLinks.push(arrMatch[0]);
@@ -63,6 +82,15 @@ function linkUpdator() {
     });
 }
 
+function linkSeperator(userInput){
+    // splits string
+    let urlArr = userInput.split("http");
+    urlArr.shift(); // removing first empty element, when delimiter is the beginning of string
+
+    // adds protocol back to urls and concatenates array with clear " " delimitor
+    return urlArr = urlArr.map((url) => "http" + url).join(" ");
+}
+
 function openAll() {
     for (const link of importedLinks) {
         window.open(link);
@@ -74,16 +102,13 @@ function clear() {
     linkList.innerHTML = "<h2>URLs:</h2>";
     const btnOptions = document.querySelector(".btn-container");
     btnOptions.classList.add("hide");
+    // btn.setAttribute("disabled", true);
 }
 
-
+//TODO: ???
 function inputSanitationandValidation(){
 
 }
-
-
-//! client must allow pop-ups and re-directs for multiple links to open
-
 
 // https://youtu.be/T1EJZsaqevU
 // https://youtu.be/buvWBOZTfdc
