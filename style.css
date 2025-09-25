@@ -21,6 +21,11 @@ body{
     flex-flow: column nowrap;
     align-content: center;
     justify-content: space-around; */
+
+
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr 2fr 1fr;
+    align-items: center;
 }
 
 h1, h2, label { color: white; }
@@ -73,7 +78,8 @@ button {
     width: 100%;
 }
 .hide{
-    display: none;
+    /* display: none; */
+    visibility: hidden;
 }
 
 
@@ -116,8 +122,9 @@ button {
     scrollbar-color: #464b53 #bebebe60;
 
     .link-list-item{
+        position: relative;
+        width: 100%;
         border-bottom: 1px solid black;
-        width: 50%;
         padding: 0.5rem 1rem;
         background-color: white;
         cursor: pointer;
@@ -125,4 +132,46 @@ button {
     .link-list-item:hover{
         background-color: #d3d3d3;
     }
+}
+
+.link-list-item .edit-link-item{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    background-color: #6e6e6e;
+
+    /* centering */
+    width: 10%;
+    height: 100%;
+    align-content: center;
+}
+.link-list-item .remove-link-item{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    background-color: #6e6e6e;
+
+    /* centering */
+    width: 10%;
+    height: 100%;
+    align-content: center;
+}
+.link-list-item .remove-link-item:hover{
+    font-size: 1.2rem;
+    color: #dc3545;
+}
+
+
+/* footer */
+#footer{
+    /* vertical center */
+    align-content: center;
+    height: 100%;
+
+    color: #fdfffc;
+    background-color: #11346a;
 }
