@@ -15,14 +15,12 @@
             <h1>Bulk Opener</h1>
         </section>
 
-        <section id="body">
+        <section id="input-body">
             <label for="url-input">URLs to Open:</label><br>
             <textarea name="url-input" id="url-input" rows="20" placeholder="Type Here..."></textarea>
             <button id="btn-submit">Submit</button>
 
-            <div class="warning-pop-up hide">
-                <h2>Please input URL(s)</h2>
-            </div>
+            <div class="warning-pop-up hide"></div>
         </section>
 
         <section class="btn-container hide">
@@ -31,19 +29,21 @@
             <h2>URLs:</h2>
         </section>
 
-        <!-- <section id="link-list"></section> -->
+        <section id="link-list"></section>
         
-        <section id="link-list">
+        <!-- <section id="link-list">
              <article class="link-list-item">
-                 <span class="edit-link-item" title="Edit">E</span>
-                <p>https://somelink.com</p>
+                <span class="edit-link-item" title="Edit">E</span>
+                <input class="list-editable-text display-none" type="text" name="" id="" required>
+                <p class="list-text">https://somelink.com</p>
                 <span class="remove-link-item" title="Remove">X</span>
             </article>
-        </section>
-        <!-- <footer id="footer">
-            <h2>Footer</h2>
-        </footer> -->
+        </section> -->
+
     </main>
+    <footer id="footer">
+        <h2>Footer</h2>
+    </footer>
     <script src="./index.js"></script>
 </body>
 
