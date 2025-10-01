@@ -13,6 +13,7 @@ body{
     text-align: center;
     height: 100dvh;
     /* height: 95%; */
+    padding: 1.5rem;
 
     /* centering */
     width: 50%;
@@ -90,13 +91,11 @@ button {
 }
 
 
-
-
-
 .btn-container{
     :first-child{
         width: 50%;
         background-color: #ffc107;
+        border-radius: 0.5rem 0 0 0.5rem;
     }
     :first-child:hover{
         background-color: #ffd350;
@@ -105,6 +104,7 @@ button {
         float: right;
         width: 50%;
         background-color: #dc3545;
+        border-radius: 0 0.5rem 0.5rem 0;
     }
     :nth-child(2):hover{
         background-color: #ec5a68;
@@ -194,4 +194,17 @@ button {
     
     color: #fdfffc;
     background-color: #11346a;
+}
+
+
+/* Responsive-ish Design: */
+@media (max-width: 500px){
+    #main-body {
+        width: 80%;
+    }
+}
+@media (max-width: 400px){
+    h1{ font-size: clamp(1.5rem, 2rem, 10vw); }
+    h2{ font-size: clamp(1rem, 1.5rem, 8vw); }
+    p, label{ font-size: clamp(0.5rem, 0.85rem, 5vw); }
 }

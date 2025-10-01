@@ -2,9 +2,8 @@
 
 const textArea = document.getElementById("url-input");
 const linkList = document.getElementById("link-list");
-const urlRegEx = /https?:\/\/[^\s]*/ig;
-
 const btnOptions = document.querySelector(".btn-container");
+const urlRegEx = /https?:\/\/[^\s]*/ig;
 
 // Events
 const submitBtn = document.getElementById("btn-submit");
@@ -16,24 +15,34 @@ document.getElementById("clear-all").addEventListener("click", () => clear(1));
 // Links Array
 let importedLinks = [];
 
-// Event Flag
+// Event Flags
 let enableClickEvent = true;
+let textFieldEmpty = true;
 
-
-//TODO: debounce event
-// Button is only active when text-area has input
+//* Debouncing Event: Button is only active when text-area has input
 let submitBtnTimer;
 submitBtn.setAttribute("disabled", true);
 textArea.addEventListener("input", () => {
     clearTimeout(submitBtnTimer);
     submitBtnTimer = setTimeout(() => {
-        console.log("HERE");
-        textArea.value.length ? submitBtn.removeAttribute("disabled") : submitBtn.setAttribute("disabled", true);
+        if(textArea.value.length){
+            submitBtn.removeAttribute("disabled");
+            textFieldEmpty = false;
+        }else{
+            submitBtn.setAttribute("disabled", true);   // disables
+            textFieldEmpty = true;
+        }
+        // textArea.value.length ? submitBtn.removeAttribute("disabled") : submitBtn.setAttribute("disabled", true);
     }, 100);
 });
 
-// TODO: able to selectively remove links from link-list
-// TODO: able to edit specific link list item
+//TODO: key-bindings of (SHIFT + ENTER) to open bulk, (SHIFT + C) to clear
+window.addEventListener("keydown", e => {
+    if(e.shiftKey && e.key == "Enter"){
+        handleUserInput();
+        openAll();
+    }
+})
 
 function handleUserInput() {
     const httpRegEx = /https?/ig;
@@ -62,13 +71,13 @@ function handleUserInput() {
 
         linkList.innerHTML +=
             ` <article class="link-list-item">
-                <span class="edit-link-item" title="Edit">E</span>
+                <span class="edit-link-item" title="Edit">Edit</span>
                 <input class="list-editable-text display-none" type="text" name="" id="" required>
                 <p class="list-text">${arrMatch[0]}</p>
                 <span class="remove-link-item" title="Remove">X</span>
             </article>`
     }
-    linkUpdator();
+    linkUpdator();  // applies event listeners on links and buttons
 }
 
 function linkUpdator() {
@@ -78,7 +87,6 @@ function linkUpdator() {
         link.addEventListener("click", () => {
             // opens only if flag is true
             if(enableClickEvent) window.open(importedLinks[index]);
-            // console.log(importedLinks[index]);
         });
     });
 
@@ -104,17 +112,18 @@ function linkUpdator() {
 
             // toggles between current url or editable text field
             if (newURL.classList.contains("display-none")) {
+                link.textContent = "Save";
                 newURL.classList.remove("display-none");
                 currentURL.classList.add("display-none");
                 enableClickEvent = false;  // temporarily disables link opening
             } else {
+                link.textContent = "Edit";
                 newURL.classList.add("display-none");
                 currentURL.classList.remove("display-none");
                 enableClickEvent = true;  //re-enables
 
                 // updates array of links to new inputs
                 importedLinks.splice(index, 1, currentURL.innerHTML);
-                console.log("BRUH", importedLinks);
             }
 
             newURL.addEventListener("input", e => {
@@ -135,32 +144,34 @@ function linkSeperator(userInput) {
     return urlArr = urlArr.map((url) => "http" + url).join(" ");
 }
 
+// Dynamic Popup
+function displayPopUp(msg = "", delay = 2000){
+    const popUpWarning = document.querySelector(".warning-pop-up");
+    popUpWarning.classList.remove("hide");
+    popUpWarning.innerHTML = `<h2>${msg}</h2>`;
+    setTimeout(() => popUpWarning.classList.add("hide"), delay);  // hides after timeout
+}
+
 function openAll() {
     for (const link of importedLinks) {
-        window.open(link);  // window.open(url)
+        // window.open(link);  // window.open(url)
+
+        // if pop-ups are blocked, then notify the user to enable permissions
+        const retWindow = window.open(link, "_blank").focus();
+        if(retWindow === null || typeof retWindow === "undefined" || retWindow.closed){
+            displayPopUp("Please enable pop-ups permissions in order to open multiple links!", 5000);
+        }
     }
 }
 
 function clear(mode = 0) {   // mode 0 - clear previous, mode 1 - clear all
     importedLinks = [];
     linkList.innerHTML = "";
+    textFieldEmpty = true;
     const btnOptions = document.querySelector(".btn-container");
     mode
         ? btnOptions.classList.add("hide")
         : btnOptions.classList.remove("hide");
-}
-
-// Dynamic Popup
-function displayPopUp(msg = ""){
-    const popUpWarning = document.querySelector(".warning-pop-up");
-    popUpWarning.classList.remove("hide");
-    popUpWarning.innerHTML = `<h2>${msg}</h2>`;
-    setTimeout(() => popUpWarning.classList.add("hide"), 2000);
-}
-
-//TODO: ???
-function inputSanitationandValidation() {
-
 }
 
 /*
