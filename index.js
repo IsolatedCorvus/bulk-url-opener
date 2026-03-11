@@ -1,9 +1,11 @@
 //! client must allow pop-ups and re-directs for multiple links to open
+    //TODO: include graphic of how to enable pop-ups. (?) indicator, when hovered will display the graphic
 
 const textArea = document.getElementById("url-input");
 const linkList = document.getElementById("link-list");
 const btnOptions = document.querySelector(".btn-container");
 const urlRegEx = /https?:\/\/[^\s]*/ig;
+
 
 // Events
 const submitBtn = document.getElementById("btn-submit");
@@ -114,6 +116,10 @@ function linkUpdator() {
             if (newURL.classList.contains("display-none")) {
                 link.textContent = "Save";
                 newURL.classList.remove("display-none");
+                
+                // displays current url
+                newURL.value = importedLinks[index];
+
                 currentURL.classList.add("display-none");
                 enableClickEvent = false;  // temporarily disables link opening
             } else {
@@ -172,6 +178,32 @@ function clear(mode = 0) {   // mode 0 - clear previous, mode 1 - clear all
     mode
         ? btnOptions.classList.add("hide")
         : btnOptions.classList.remove("hide");
+}
+
+// tool tips
+//TODO: debounce the event to slowdown the frequency of callback func
+const toolTip = document.getElementById("page-tool-tip");
+
+toolTip.addEventListener("mouseenter", () => {
+    console.log("hi");
+    displayTipGraphic(1);
+});
+toolTip.addEventListener("mouseleave", () => {
+    console.log("bye");
+    displayTipGraphic();
+});
+
+function displayTipGraphic(display = 0){
+    if(display){
+        let graphic = document.createElement("p");
+        graphic.innerHTML = 
+            `<img id="tool-tip-image" 
+                src="https://i.redd.it/some-out-of-context-gmm-memes-for-yall-v0-w96wt57mg4ea1.jpg?width=637&format=pjpg&auto=webp&s=28b8e297c83703b8c13f14361427bf7978b3f71d"/>`;
+        toolTip.appendChild(graphic);
+
+    }else{
+        toolTip.removeChild(toolTip.lastChild);
+    }
 }
 
 /*

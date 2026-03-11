@@ -3,6 +3,9 @@
     margin: 0;
     box-sizing: border-box;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
 }
 
 body{
@@ -39,6 +42,28 @@ button {
     border: none;
     cursor: pointer;
 }
+
+/* tooltip */
+#page-tool-tip{
+    position: relative;
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
+    }
+}
+#tool-tip-image{
+    width: 250px;
+    /* height: 100%; */
+
+    left: 50%; /* Moves the top-left corner to the horizontal center of the parent */
+    top: 100%;
+    transform: translateX(-50%); /* Shifts the element back by half its own width and half its own height */
+
+    object-fit: contain;
+    position: absolute;
+    z-index: 2;
+}
+
 
 /* input body */
 #input-body {
@@ -110,7 +135,7 @@ button {
         background-color: #ec5a68;
     }
     :nth-child(3){
-        margin-top: 2%;
+        margin: 2% 0;
     }
 }
 .btn-options{
@@ -197,8 +222,20 @@ button {
 }
 
 
+
+
+
+
+
 /* Responsive-ish Design: */
-@media (max-width: 500px){
+/* @media (min-width: 500px){ */
+@media (width >= 900px){
+    #main-body {
+        /* width: minmax(60%, 1000px); */
+        width: 65%;
+    }
+}
+@media (width <= 500px){
     #main-body {
         width: 80%;
     }
